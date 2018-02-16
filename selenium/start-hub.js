@@ -71,7 +71,6 @@ selenium.install(options, (err) => {
     startHub()
       .then(() => startNode(0))
       .then(() => startNode(1))
-      .then(() => startNode(2))
       .then(() => {
         console.log('Selenium: Setup complete');
         return process.exit(0)

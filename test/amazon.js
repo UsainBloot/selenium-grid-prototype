@@ -20,10 +20,14 @@ browsers.forEach((browserName) => {
     getDesiredCapabilities(browserName)
   ));
 
-  describe(`${browserName} - amazon.com`, () => {
+  describe(`${browserName} - amazon.com`, function() {
+
+    this.timeout(0);
 
     before(browser.init);
     after(browser.end);
+
+    beforeEach(() => this.timeout(20000));
 
     Array.from(Array(iterations).keys()).forEach(() => {
 

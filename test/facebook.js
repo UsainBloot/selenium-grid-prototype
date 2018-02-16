@@ -20,10 +20,14 @@ browsers.forEach((browserName) => {
     getDesiredCapabilities(browserName)
   ));
 
-  describe(`${browserName} - facebook.com`, () => {
+  describe(`${browserName} - facebook.com`, function() {
+
+    this.timeout(0);
 
     before(browser.init);
     after(browser.end);
+
+    beforeEach(() => this.timeout(20000));
 
     Array.from(Array(iterations).keys()).forEach(() => {
 

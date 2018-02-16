@@ -1,7 +1,0 @@
-{
-  "chromeOptions": {
-    "args": [
-      "headless", "no-sandbox"
-    ]
-  }
-}
