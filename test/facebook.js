@@ -3,29 +3,37 @@
 const assert = require('assert');
 const webdriverio = require('webdriverio');
 
-const browser = webdriverio.remote({
-  remote: 'local',
-  baseUrl: 'https://www.facebook.com',
-  desiredCapabilities: {
-    browserName: 'chrome',
-    chromeOptions: {
-      args: ['headless', 'no-sandbox']
-    }
-  }
-});
+const browsers = require('./lib/getBrowsers')();
+const iterations = require('./lib/getIterations')();
+const getDesiredCapabilities = require('./lib/getDesiredCapabilities');
 
-describe('facebook.com', () => {
+browsers.forEach((browserName) => {
 
-  before(browser.init);
-  after(browser.end);
+  const browser = webdriverio.remote(Object.assign(
+    {
+      remote: 'local',
+      baseUrl: 'https://www.facebook.com',
+      desiredCapabilities: {
+        browserName: browserName
+      }
+    },
+    getDesiredCapabilities(browserName)
+  ));
 
-  Array.from(Array(20).keys()).forEach(() => {
+  describe(`${browserName} - facebook.com`, () => {
 
-    it('has a title', () => {
-      return browser.url('/')
-        .then(() => browser.pause(1000))
-        .then(browser.getTitle)
-        .then((value) => assert.equal(value, 'Facebook – log in or sign up'));
+    before(browser.init);
+    after(browser.end);
+
+    Array.from(Array(iterations).keys()).forEach(() => {
+
+      it('has a title', () => {
+        return browser.url('/')
+          .then(() => browser.pause(1000))
+          .then(browser.getTitle)
+          .then((value) => assert.equal(value, 'Facebook – log in or sign up'));
+      });
+
     });
 
   });

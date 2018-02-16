@@ -6,8 +6,8 @@
   "scripts": {
     "selenium-start": "node ./selenium/start.js",
     "selenium-start:hub": "node ./selenium/start-hub.js",
-    "test": "mocha 'test/**/*.js' --timeout 15000",
-    "test:parallel": "mocha-parallel-tests 'test/**/*.js' --timeout 15000 --max-parallel 8",
+    "test": "mocha 'test/**/*.js' --timeout 20000",
+    "test:parallel": "mocha-parallel-tests 'test/**/*.js' --timeout 20000 --max-parallel 8",
     "test:e2e": "npm run selenium-start && npm run test && npm run kill",
     "test:grid": "npm run selenium-start:hub && npm run test:parallel && npm run kill",
     "grid:debug": "DEBUG=selenium-standalone:start npm run grid",

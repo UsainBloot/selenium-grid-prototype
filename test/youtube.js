@@ -3,29 +3,37 @@
 const assert = require('assert');
 const webdriverio = require('webdriverio');
 
-const browser = webdriverio.remote({
-  remote: 'local',
-  baseUrl: 'https://www.youtube.com',
-  desiredCapabilities: {
-    browserName: 'chrome',
-    chromeOptions: {
-      args: ['headless', 'no-sandbox']
-    }
-  }
-});
+const browsers = require('./lib/getBrowsers')();
+const iterations = require('./lib/getIterations')();
+const getDesiredCapabilities = require('./lib/getDesiredCapabilities');
 
-describe('youtube.com', () => {
+browsers.forEach((browserName) => {
 
-  before(browser.init);
-  after(browser.end);
+  const browser = webdriverio.remote(Object.assign(
+    {
+      remote: 'local',
+      baseUrl: 'https://www.youtube.com',
+      desiredCapabilities: {
+        browserName: browserName
+      }
+    },
+    getDesiredCapabilities(browserName)
+  ));
 
-  Array.from(Array(20).keys()).forEach(() => {
+  describe(`${browserName} - youtube.com`, () => {
 
-    it('has a title', () => {
-      return browser.url('/')
-        .then(() => browser.pause(1000))
-        .then(browser.getTitle)
-        .then((value) => assert.equal(value, 'YouTube'));
+    before(browser.init);
+    after(browser.end);
+
+    Array.from(Array(iterations).keys()).forEach(() => {
+
+      it('has a title', () => {
+        return browser.url('/')
+          .then(() => browser.pause(1000))
+          .then(browser.getTitle)
+          .then((value) => assert.equal(value, 'YouTube'));
+      });
+
     });
 
   });

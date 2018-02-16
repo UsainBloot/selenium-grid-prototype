@@ -47,7 +47,19 @@ function startNode(index) {
 }
 
 const options = {
-  version: '3.9.0'
+  version: '3.9.0',
+  drivers: {
+    chrome: {
+      version: '2.35',
+      arch: process.arch,
+      baseURL: 'https://chromedriver.storage.googleapis.com'
+    },
+    firefox: {
+      version: '0.19.1',
+      arch: process.arch,
+      baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
+    }
+  }
 };
 
 console.log('Selenium: Installing');
@@ -59,6 +71,7 @@ selenium.install(options, (err) => {
     startHub()
       .then(() => startNode(0))
       .then(() => startNode(1))
+      .then(() => startNode(2))
       .then(() => {
         console.log('Selenium: Setup complete');
         return process.exit(0)

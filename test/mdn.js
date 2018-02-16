@@ -12,7 +12,7 @@ browsers.forEach((browserName) => {
   const browser = webdriverio.remote(Object.assign(
     {
       remote: 'local',
-      baseUrl: 'https://www.twitter.com',
+      baseUrl: 'https://developer.mozilla.org',
       desiredCapabilities: {
         browserName: browserName
       }
@@ -20,7 +20,7 @@ browsers.forEach((browserName) => {
     getDesiredCapabilities(browserName)
   ));
 
-  describe(`${browserName} twitter.com`, () => {
+  describe(`${browserName} - developer.mozilla.org`, () => {
 
     before(browser.init);
     after(browser.end);
@@ -31,11 +31,11 @@ browsers.forEach((browserName) => {
         return browser.url('/')
           .then(() => browser.pause(1000))
           .then(browser.getTitle)
-          .then((value) => assert(value.includes('Twitter')));
+          .then((value) => assert.equal(value, 'MDN Web Docs'));
       });
 
     });
 
-  });
+});
 
 });
