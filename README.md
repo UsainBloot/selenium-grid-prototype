@@ -13,8 +13,6 @@ http://localhost:4444/grid/console
 ## Running Tests
 
 ### Environment Variables
-* `BROWSER` - default `'chrome'`. Comma seperated list of browsers to test eg. `BROWSERS=chrome,firefox`
-* `HEADLESS` - default `'false'`. When `true` run tests in headless mode for all available browsers. eg. `HEADLESS=true`
 * `ITERATIONS` - default `10`. Number of tests to repeat for each website. eg. `ITERATIONS=10`
 
 ### Using Selenium
